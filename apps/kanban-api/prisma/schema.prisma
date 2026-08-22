@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  boardMembers BoardMember[]
+}
+
+model Board {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  boardMembers BoardMember[]
+  lists        List[]
+}
+
+model BoardMember {
+  userId    String
+  boardId   String
+  role      BoardMemberRoles
+  createdAt DateTime         @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@id([userId, boardId])
+}
+
+model List {
+  id        String   @id @default(uuid())
+  boardId   String
+  title     String
+  position  Float
+  createdAt DateTime @default(now())
+
+  cards Card[]
+  board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+}
+
+model Card {
+  id          String   @id @default(uuid())
+  listId      String
+  title       String
+  description String?
+  position    Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  list List @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@index([listId, position])
+}
+
+enum BoardMemberRoles {
+  OWNER // Todas as permissoes
+  ADMIN // Todas as permissoes exceto de excluir board ou modificar configuracoes sensiveis
+  CONTRIBUTOR // Ler, adicionar e editar listas e cards
+  GUEST // Apenas leitura
+}
