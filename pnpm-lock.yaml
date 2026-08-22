@@ -25,6 +25,10 @@ importers:
         specifier: ^7.0.2
         version: 7.0.2
 
+  apps/kanban-client: {}
+
+  packages/shared: {}
+
 packages:
 
   '@electric-sql/pglite-socket@0.1.3':
