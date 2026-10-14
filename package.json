@@ -1,0 +1,10 @@
+{
+  "name": "kanban",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.28.3",
+  "scripts": {
+    "dev:api": "pnpm --filter @kanban/api dev",
+    "dev:client": "pnpm --filter @kanban/client dev"
+  }
+}
