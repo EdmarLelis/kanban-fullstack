@@ -8,4 +8,9 @@ const port = process.env.PORT || 3333;
 app.use(express.json());
 app.use(router);
 
-app.listen(port, () => console.log(`kanban-api is UP at ${port}!`));
+app.listen(port, (error) => {
+  if (error) {
+    throw error;
+  }
+  console.log(`kanban-api is UP at ${port}!`);
+});
