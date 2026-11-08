@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "target": "esnext",
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
   },
   "include": ["src"]
 }
